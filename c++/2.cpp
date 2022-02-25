@@ -3,6 +3,7 @@
 #include<algorithm>
 #include<string>
 #include<cmath>
+#include<stack>
 using namespace std;
 
 class Solution {
@@ -175,6 +176,25 @@ public:
         }
         second->next = second->next->next;
         return head;
+    }
+    bool isValid(string s) {
+        stack<char> sta;
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == '(' || s[i] == '[' || s[i] == '{'){
+                sta.push(s[i]);
+            }else if(!sta.size()){
+                return false;
+            }
+            else if(s[i] == ')' && sta.top() == '(' ||
+                    s[i] == ']' && sta.top() == '[' ||
+                    s[i] == '}' && sta.top() == '{'){
+                sta.pop();
+            }else{
+                return false;
+            }
+    	}
+        if(sta.size())return false;
+        return true;
     }
 };
 
