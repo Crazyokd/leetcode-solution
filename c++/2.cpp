@@ -7,6 +7,13 @@ using namespace std;
 
 class Solution {
 public:
+    struct ListNode{
+        int val;
+        ListNode *next;
+        ListNode() : val(0), next(nullptr) {}
+        ListNode(int x) : val(0), next(nullptr) {}
+        ListNode(int x, ListNode* next) : val(0), next(nullptr) {}
+    };
     //从两端向中间扩散
     int maxArea(vector<int>& height) {
         int start=0,end=height.size()-1;
@@ -155,6 +162,20 @@ public:
         helper(digits,0,"",res);
         return res;
     }
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *first=head, *second=head;
+        while(n--){
+            first = first->next;
+        }
+        // 删除头结点
+        if(first == NULL) return head->next;
+        while(first->next != NULL){
+            first = first->next;
+            second = second->next;
+        }
+        second->next = second->next->next;
+        return head;
+    }
 };
 
 int main(){
@@ -166,5 +187,6 @@ int main(){
     strs.push_back("flight");
     // cout << solution.longestCommonPrefix(strs);
     solution.letterCombinations("23");
+    printf("run success!");
     return 0;
 }
