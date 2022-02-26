@@ -61,6 +61,30 @@ public:
         return ans;
 
     }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode* res = new ListNode();
+        ListNode* head = res;
+        while(!lists.empty()){
+            int min=10001,index = 0;
+        	for(int i=0;i < lists.size(); i++){
+            	if(lists[i] == NULL){
+                	lists.erase(lists.begin() + i);
+               	 	i--;
+                    continue;
+            	}
+                if(min > lists[i]->val){
+                    min =lists[i]->val;
+                    index = i;
+                }
+            }
+
+            res->next = lists[index];
+            res = res->next;
+            if (lists[index] != NULL)
+            lists[index] = lists[index]->next;
+    	}
+        return head->next;
+    }
 };
 int main(){
     printf("run success!");
