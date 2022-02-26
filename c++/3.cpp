@@ -85,6 +85,19 @@ public:
     	}
         return head->next;
     }
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* pre = head;
+        while(pre != NULL){
+            if(pre->next != NULL){
+                // swap
+                int t = pre->val;
+                pre->val = pre->next->val;
+                pre->next->val = t;
+                pre = pre->next->next;
+            }else break;
+        }
+    	return head;
+    }
 };
 int main(){
     printf("run success!");
