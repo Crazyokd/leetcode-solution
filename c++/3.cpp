@@ -1,4 +1,6 @@
 #include<iostream>
+#include<vector>
+#include<string>
 
 using namespace std;
 
@@ -41,6 +43,23 @@ public:
         if (list1 == NULL)ans->next = list2;
         else ans->next = list1;
         return res->next;
+    }
+    vector<string> generateParenthesis(int n) {
+    	vector<string> ans;
+        return helper(ans, "(", "(", n-1, 2*n);
+    }
+    vector<string> helper(vector<string> &ans, string real, string res, int n, int len){
+        if (res.size() == len){
+            ans.push_back(res);
+        }
+    	if (n){
+            helper(ans, real+"(", res+"(", n-1, len);
+        }
+        if (real.size()){
+            helper(ans, real.substr(0,real.size()-1), res+")", n, len);
+        }
+        return ans;
+
     }
 };
 int main(){
