@@ -109,6 +109,20 @@ public:
     	}
         return len-res;
     }
+    int removeElement(vector<int>& nums, int val) {
+        int res = 0;
+        for(int i=0; i < nums.size(); i++){
+            if(nums[i] == val){
+                nums.erase(nums.begin()+i);
+                i--;
+                res++;
+            }
+        }
+        for(int i=0; i < res ; i++){
+            nums.push_back(val);
+        }
+        return nums.size() - res;
+    }
 };
 int main(){
     printf("run success!");
