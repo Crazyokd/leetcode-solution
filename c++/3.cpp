@@ -98,6 +98,30 @@ public:
         }
     	return head;
     }
+    
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *node = head;
+        int cnt = k;
+        while (cnt--){
+            if (node == NULL)return head;
+            node = node->next;
+        }
+        ListNode *newHead = reverse(head, node);
+        head->next = reverseKGroup(node, k);
+        return newHead;
+    }
+
+    ListNode* reverse(ListNode *first, ListNode *last){
+        ListNode *pre = last;
+        while(first != last){
+            ListNode *tmp = first->next;
+            first->next = pre;
+            pre = first;
+            first = tmp;
+        }
+        return pre;
+    }
+
     int removeDuplicates(vector<int>& nums) {
         int len = nums.size(), res = 0;
         for(int i=1;i < len-res;i++){
