@@ -98,6 +98,17 @@ public:
         }
     	return head;
     }
+    int removeDuplicates(vector<int>& nums) {
+        int len = nums.size(), res = 0;
+        for(int i=1;i < len-res;i++){
+            if(nums[i] == nums[i-1]){
+                res++;
+                nums.erase(nums.begin()+i);
+                nums.push_back(nums[--i]);
+            }
+    	}
+        return len-res;
+    }
 };
 int main(){
     printf("run success!");
