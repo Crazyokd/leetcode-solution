@@ -54,11 +54,11 @@ func findSubstring(s string, words []string) []int {
     for _, w := range words {
         counter[w]++
     }
-    length, totalLen, tmpCounter := len(words[0]), len(words[0]*len(words), copyMap(counter)
+    length, totalLen, tmpCounter := len(words[0]), len(words[0])*len(words), copyMap(counter)
     for i, start := 0, 0; i < len(s)-length+1 && start < len(s) - length+1; i++ {
         if tmpCounter[s[i:i+length]] > 0 {
             tmpCounter[s[i:i+length]]--
-            if checkWords(tmpCouner) && (i+length-start == totalLen) {
+            if checkWords(tmpCounter) && (i+length-start == totalLen) {
                 res = append(res, start)
                 continue
             }
