@@ -147,6 +147,10 @@ public:
         }
         return nums.size() - res;
     }
+    int divide(int dividend, int divisor) {
+        if (dividend == 0x80000000 && divisor == -1)return 0x7FFFFFFF;
+        return dividend / divisor;
+    }
 };
 int main(){
     printf("run success!");
