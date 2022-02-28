@@ -147,6 +147,22 @@ public:
         }
         return nums.size() - res;
     }
+
+    int strStr(string haystack, string needle) {
+        int m = haystack.size(), n = needle.size();
+        for (int i = 0; i <= m - n; i++) {
+            int j = 0;
+            for (; j < n; j++) {
+                if (haystack[i + j] != needle[j]) {
+                    break;
+                }
+            }
+            if (j == n) {
+                return i;
+            }
+        }
+        return -1;
+    }
     int divide(int dividend, int divisor) {
         if (dividend == 0x80000000 && divisor == -1)return 0x7FFFFFFF;
         return dividend / divisor;
