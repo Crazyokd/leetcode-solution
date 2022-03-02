@@ -78,6 +78,24 @@ public:
         }
         return nums[high] < target ? high + 1 : high;
     }
+    bool isValidSudoku(vector<vector<char>>& board) {
+        vector<bool> initVec(10, false);
+        vector<vector<bool>> rowbuf(9, initVec);
+        vector<vector<bool>> colbuf(9, initVec);
+        vector<vector<bool>> boxbuf(9, initVec);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') continue;
+                int num = board[i][j] - '0';
+                if (rowbuf[i][num] || colbuf[j][num] || boxbuf[i/3*3+j/3][num]) return false;
+                rowbuf[i][num] = true;
+                colbuf[j][num] = true;
+                boxbuf[i/3*3+j/3][num] = true;
+            }
+        }
+        return true;
+    }
 };
 
 int main() {
