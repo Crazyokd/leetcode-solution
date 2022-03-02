@@ -10,7 +10,8 @@ This repository is mainly used to store my leetcode solutions.
 
 ## Specification
 - 题解分别位于[c++/](c++/)和[Go/leetcode/](Go/leetcode/)目录。    
-- 题解按题号排序【~~目前还没有跳题~~】  
+- 题解按题号排序
+- 跳题目录请参考[skip.txt](skip.txt)
 - 题解的每个文件包含十道题的题解(_可能有一题多解的情况_)
 - 题解文件的命名为`n.suffix`，包括题目序号为**`(n-1)*10+1~n*10)`**  
 - 题解的函数名与[**leetcode**](https://leetcode.com/problemset/all/)上给定的函数名一致  
@@ -34,7 +35,7 @@ This repository is mainly used to store my leetcode solutions.
 
 ## Others
 - [一本通](http://ybt.ssoier.cn:8088/)上的【（基础二）基础算法】和【（基础三）数据结构】大部分题解可参考[sxrekord](https://www.cnblogs.com/sxrekord/).
-> 由于该网站太卡了，已停止更新。
+    > 由于该网站太卡了，已停止更新。
 - [Data Structure Visualizations](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
 - [VISUALGO](https://visualgo.net/zh)
 
