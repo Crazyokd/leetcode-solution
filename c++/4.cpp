@@ -65,6 +65,19 @@ public:
         }
         return -1;
     }
+    int searchInsert(vector<int>& nums, int target) {
+        int low = 0, high = nums.size() - 1;
+        while(high > low) {
+            int mid = low + ((high-low)>>1);
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target) {
+                low = mid + 1;
+            }else {
+                high = mid;
+            }
+        }
+        return nums[high] < target ? high + 1 : high;
+    }
 };
 
 int main() {
