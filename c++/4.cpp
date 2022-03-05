@@ -1,5 +1,7 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
+
 using namespace std;
 
 class Solution {
@@ -96,8 +98,37 @@ public:
         }
         return true;
     }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        sort(candidates.begin(), candidates.begin()+candidates.size());
+        
+        vector<int> tmp;
+        findCombinationSum(0, candidates, target, tmp, res);
+        return res;
+    }
+    
+    void findCombinationSum(int index, vector<int> &candidates, int target, vector<int> tmp, vector<vector<int>> &res){
+        if (target == 0){
+            res.push_back(tmp);
+            return;
+        }
+        for (int i = index;i < candidates.size();i++){
+            if (candidates[i] > target)break;
+            tmp.push_back(candidates[i]);
+            findCombinationSum(i, candidates, target - candidates[i], tmp, res);
+            tmp.pop_back();
+        }
+    }
 };
 
 int main() {
+    vector<int> candidates;
+    candidates.push_back(2);
+    candidates.push_back(3);
+    candidates.push_back(6);
+    candidates.push_back(7);
+
+    Solution s;
+    s.combinationSum(candidates, 7);
     return 0;
 }
