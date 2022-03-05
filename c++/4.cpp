@@ -119,6 +119,33 @@ public:
             tmp.pop_back();
         }
     }
+
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        sort(candidates.begin(), candidates.begin()+candidates.size());
+        
+        vector<int> tmp;
+        findCombinationSum2(0, candidates, target, tmp, res);
+        // sort(res.begin(), res.end());
+        // res.resize(unique(res.begin(), res.end()) - res.begin());
+        return res;
+    }
+    
+    void findCombinationSum2(int index, vector<int> &candidates, int target, vector<int> tmp, vector<vector<int>> &res){
+        if (target == 0){
+            res.push_back(tmp);
+            return;
+        }
+        int flag = 0;
+        for (int i = index;i < candidates.size();i++){
+            if (candidates[i] > target)break;
+            if (flag == candidates[i])continue;
+            tmp.push_back(candidates[i]);
+            flag = candidates[i];
+            findCombinationSum(i+1, candidates, target - candidates[i], tmp, res);
+            tmp.pop_back();
+        }
+    }
 };
 
 int main() {
