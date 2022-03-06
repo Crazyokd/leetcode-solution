@@ -2,5 +2,8 @@
 *.exe
 *.out
 
-## vscode
+# vscode
 .vscode/
+
+# push script
+push.bat
