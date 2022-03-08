@@ -5,3 +5,7 @@
 
 37.Sudoku Solver | 22.3.5
 38.Count and Say | 22.3.5
+
+42.Trapping Rain Water | 22.3.6
+
+44.Wildcard Matching | 22.3.8
