@@ -48,8 +48,37 @@ public:
         }
         return -1;
     }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<int> tmp;
+        vector<vector<int>> res;
+        permuteHelper(nums, tmp, res);
+        return res;
+    }
+    void permuteHelper(vector<int> nums, vector<int> tmp, vector<vector<int>> &res) {  
+        if (nums.empty()) {
+            res.push_back(tmp);
+            return;
+        }
+        // dfs
+        for (int i = 0; i < nums.size(); i++) {
+            tmp.push_back(nums[i]);
+            // through copy to store origin data
+            vector<int> numsCopy(nums);
+            numsCopy.erase(numsCopy.begin()+i);
+            // permuteHelper(numsCopy, tmp, res);
+            // reduct
+            tmp.pop_back();
+        }
+    }
 };
 
 int main() {
+    Solution s;
+    vector<int> nums;
+    nums.push_back(1);
+    nums.push_back(2);
+    nums.push_back(3);
+    s.permute(nums);
     return 0;
 }
