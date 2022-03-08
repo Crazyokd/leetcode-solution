@@ -34,6 +34,20 @@ public:
         
         return ans;
     }
+
+    int jump(vector<int>& nums) {
+        if (nums.size() == 1)return 0;
+        // 初始化
+        vector<int> res(nums.size(), 10005);
+        res[0] = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            for(int j = i+1; j <= i+nums[i]; j++){
+                res[j] = min(res[j], res[i]+1);
+                if (j == nums.size()-1)return res[j];
+            }
+        }
+        return -1;
+    }
 };
 
 int main() {
