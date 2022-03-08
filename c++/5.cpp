@@ -66,7 +66,34 @@ public:
             // through copy to store origin data
             vector<int> numsCopy(nums);
             numsCopy.erase(numsCopy.begin()+i);
-            // permuteHelper(numsCopy, tmp, res);
+            permuteHelper(numsCopy, tmp, res);
+            // reduct
+            tmp.pop_back();
+        }
+    }
+
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<int> tmp;
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        permuteUniqueHelper(nums, tmp, res);
+        return res;
+    }
+    void permuteUniqueHelper(vector<int> nums, vector<int> tmp, vector<vector<int>> &res) {  
+        if (nums.empty()) {
+            res.push_back(tmp);
+            return;
+        }
+        // dfs
+        int flag = nums[0];
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > 0 && nums[i] == flag)continue;
+            flag = nums[i];
+            tmp.push_back(nums[i]);
+            // through copy to store origin data
+            vector<int> numsCopy(nums);
+            numsCopy.erase(numsCopy.begin()+i);
+            permuteUniqueHelper(numsCopy, tmp, res);
             // reduct
             tmp.pop_back();
         }
@@ -77,8 +104,8 @@ int main() {
     Solution s;
     vector<int> nums;
     nums.push_back(1);
+    nums.push_back(1);
     nums.push_back(2);
-    nums.push_back(3);
-    s.permute(nums);
+    s.permuteUnique(nums);
     return 0;
 }
