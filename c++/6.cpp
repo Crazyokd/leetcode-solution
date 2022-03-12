@@ -120,11 +120,35 @@ public:
         }
         return 0;
     }
+
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        // 对数组进行排序
+        sort(intervals.begin(), intervals.end(), cmp);
+        
+        vector<vector<int>> res;
+        res.push_back(intervals[0]);
+        for (int i = 1; i < intervals.size(); i++) {
+            if (intervals[i][0] <= res.back()[1]) {
+                res.back()[1]= max(res.back()[1], intervals[i][1]);
+            }else {
+                res.push_back(intervals[i]);
+            }
+            
+        }   
+        return res;
+    }
+    static bool cmp(vector<int> a, vector<int> b) {
+        return a[0] < b[0] || (a[0] == b[0] && a[1] < b[1]);
+    }
 };
+
+
 
 int main() {
     Solution s;
-    vector<vector<string>> res = s.solveNQueens(4);
-    
+    // vector<vector<string>> res = s.solveNQueens(4);
+    vector<vector<int>> intervals = {{2,3},{4,6},{8,10},{1,10}};
+    s.merge(intervals);
+    cout << "run over!";
     return 0;
 }
