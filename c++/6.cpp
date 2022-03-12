@@ -140,6 +140,11 @@ public:
     static bool cmp(vector<int> a, vector<int> b) {
         return a[0] < b[0] || (a[0] == b[0] && a[1] < b[1]);
     }
+
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        intervals.push_back(newInterval);
+        return merge(intervals);
+    }
 };
 
 
