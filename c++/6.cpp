@@ -101,6 +101,10 @@ public:
         }
         return true;
     }
+
+    int totalNQueens(int n) {
+        return solveNQueens(n).size();
+    }
 };
 
 int main() {
