@@ -1,3 +1,9 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
@@ -50,4 +56,56 @@ public:
     	if (res.size() > len) return true;
         return false;
     }
+
+
+    vector<vector<string>> solveNQueens(int n) {
+        string initStr = "";
+        // init string
+        for (int i = 0; i < n; i++) {
+            initStr += '.';
+        }
+        vector<string> board(n, initStr);
+        vector<vector<string>> res;
+        solveHelper(0, n, board, res);
+        return res;
+    }
+
+    void solveHelper(int row, int n, vector<string> cur, vector<vector<string>> &res) {
+        // over condition
+        if (row >= n) {
+            res.push_back(cur);
+            return;
+        }
+        // row 代表当前行, i 代表当前列
+        for (int i = 0; i < n; i++) {
+            // 判断是否可放
+            if (judge(row, i, n, cur)){
+            cur[row][i] = 'Q';
+            solveHelper(row+1, n, cur, res);
+            // restore
+            cur[row][i] = '.';
+            }
+        }
+    }
+
+    bool judge(int row, int col, int n, vector<string> &cur) {      
+        for (int i = 0; i < row; i++) {
+        // 不能位于同一列
+            if (cur[i][col] == 'Q') {
+                return false;
+            }
+        // 不能位于同一斜线
+            if (row-i-1 >= 0 && ((col-i-1 >= 0 && cur[row-i-1][col-i-1] == 'Q') || (col+i+1 < n && cur[row-i-1][col+i+1] == 'Q'))) {
+                return false;
+            }
+        }
+        return true;
+    }
 };
+
+int main() {
+    Solution s;
+    vector<vector<string>> res = s.solveNQueens(4);
+    
+    return 0;
+}
