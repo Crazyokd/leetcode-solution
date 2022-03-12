@@ -105,6 +105,21 @@ public:
     int totalNQueens(int n) {
         return solveNQueens(n).size();
     }
+
+    bool canJump(vector<int>& nums) {
+        if (nums.size() == 1) return 1;
+        if (!nums[0]) return 0;
+        vector<int> res(nums.size(), 0);
+        res[0] = nums[0];
+        for (int i = 0; i < nums.size(); i++) {
+            if (!res[i]) continue;
+            for (int j = i+1; j <= nums[i]+i; j++) {
+                if (j+1 == nums.size())return 1;
+                res[j] = 1;
+            }
+        }
+        return 0;
+    }
 };
 
 int main() {
