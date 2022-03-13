@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<string>
 
 using namespace std;
 
@@ -187,15 +188,56 @@ public:
     	if (curVal > n*n) return false;
         return true;
     }
-};
 
+    string getPermutation(int n, int k) {
+        // init vector
+        vector<int> nums(n, 1);
+        for (int i = 2; i <= n; i++) {
+            nums[i-1] = i;
+        }
+        
+        string res = "", curRes = "";
+        int cnt = 0;
+        getPermutationHelper(res, curRes, nums, cnt, k);
+        return res;
+    }
+    
+    bool getPermutationHelper(string& res, string curRes, vector<int> nums, int &cnt, int targetCnt){
+        if (nums.empty()) {
+            if (++cnt == targetCnt){
+                res += curRes;
+                return true;
+            }
+        }
+        int afterCnt = factorial(nums.size()-1);
+        for (int i = 0; i < nums.size(); i++) {
+            if (afterCnt < targetCnt - cnt) {
+                cnt += afterCnt;
+                continue;
+            }
+            vector<int> tmp(nums);
+            tmp.erase(tmp.begin()+i);
+            if (getPermutationHelper(res, curRes+to_string(nums[i]), tmp, cnt, targetCnt)) return true;
+        }
+        return false;
+    }
+    // 该函数并非严格意义上的计算阶乘
+    int factorial(int n) {
+        // if (n < 1)return 0;
+        int res = 1;
+        for (int i = 2; i <= n; i++)
+            res *= i;
+        return res;
+    }
+};
 
 
 int main() {
     Solution s;
     // vector<vector<string>> res = s.solveNQueens(4);
-    vector<vector<int>> intervals = {{2,3},{4,6},{8,10},{1,10}};
-    s.merge(intervals);
+    // vector<vector<int>> intervals = {{2,3},{4,6},{8,10},{1,10}};
+    // s.merge(intervals);
+    cout << s.getPermutation(3, 3);
     cout << "run over!";
     return 0;
 }
