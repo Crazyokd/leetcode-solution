@@ -145,6 +145,15 @@ public:
         intervals.push_back(newInterval);
         return merge(intervals);
     }
+
+    int lengthOfLastWord(string s) {
+        int index = s.size()-1, ans = 0;
+        while(s[index]==' ')index--;
+        for (int i = index; i >= 0 && s[i] != ' '; i--){
+            ans++;
+        }
+        return ans;
+    }
 };
 
 
