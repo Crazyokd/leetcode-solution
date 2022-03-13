@@ -154,6 +154,39 @@ public:
         }
         return ans;
     }
+
+    vector<vector<int>> generateMatrix(int n) {
+        vector<int> row(n, 0);
+        vector<vector<int>> matrix(n, row);
+        int startCol = 0, endCol = n, startRow = 0, endRow = n, curVal = 1;
+        while(generateMatrixHelper(startCol, endCol, startRow, endRow, matrix, curVal, n));        
+        return matrix;
+    }
+    bool generateMatrixHelper(int &startCol, int &endCol, int &startRow, int& endRow, vector<vector<int>>& matrix, int &curVal, int n) {
+        // 从左到右遍历一行
+        for (int i = startCol; i < endCol && curVal <= n*n; i++) {
+            matrix[startRow][i] = curVal++;
+        }
+        startRow++;
+        // 从上到下遍历一列
+        for (int i = startRow; i < endRow && curVal <= n*n; i++) {
+            matrix[i][endCol-1] = curVal++;
+        }
+        endCol--;
+        // 从右到左遍历一行
+        for (int i = endCol-1; i >= startCol && curVal <= n*n; i--) {
+            matrix[endRow-1][i] = curVal++;
+        }
+        endRow--;
+        
+        // 从下到上遍历一列
+        for (int i = endRow-1; i >= startRow && curVal <= n*n; i--) {
+            matrix[i][startCol] = curVal++;
+        }
+        startCol++;
+    	if (curVal > n*n) return false;
+        return true;
+    }
 };
 
 
