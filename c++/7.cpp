@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 
 using namespace std;
 
@@ -58,6 +59,20 @@ public:
     //     if (row < m)uniquePathsHelper(row+1, col, m, n, res);
     //     if (col < n)uniquePathsHelper(row, col+1, m, n, res);
     // }
+
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int arr[101][101] = {0};
+        arr[1][1] = 1;
+        int m = obstacleGrid.size(), n = obstacleGrid[0].size();
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (obstacleGrid[i-1][j-1]) {
+                    arr[i][j] = 0;
+                }else arr[i][j] += arr[i-1][j] + arr[i][j-1];
+            }
+        }
+        return arr[m][n];
+    }
 };
 
 
