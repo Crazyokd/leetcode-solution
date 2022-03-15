@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
 
 using namespace std;
 
@@ -72,6 +73,23 @@ public:
             }
         }
         return arr[m][n];
+    }
+
+    int minPathSum(vector<vector<int>>& grid) {
+        // init result
+        int m = grid.size(), n = grid[0].size();
+        vector<int> initVec(n+1, 0);
+        vector<vector<int>> res(m+1, initVec);
+        for (int i = 0; i <= m; i++)res[i][0] = 40005;
+        for (int i = 0; i <= n; i++)res[0][i] = 40005;
+        res[1][1] = grid[0][0];
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (i == 1 && j == 1)continue;
+                res[i][j] = grid[i-1][j-1] + min(res[i-1][j], res[i][j-1]);
+            }
+        }
+        return res[m][n];
     }
 };
 
