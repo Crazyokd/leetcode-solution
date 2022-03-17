@@ -91,6 +91,18 @@ public:
         }
         return res[m][n];
     }
+
+    vector<int> plusOne(vector<int>& digits) {
+        int len = digits.size(), carry = 1;
+        for (int i = len-1; i >= 0 && carry; i--) {
+            carry = (digits[i]+1)/10;
+            digits[i] = (digits[i]+1)%10;
+        }
+        vector<int> res;
+        if (carry) res.push_back(1);
+        res.insert(res.end(), digits.begin(), digits.end());
+        return res;
+    }
 };
 
 
