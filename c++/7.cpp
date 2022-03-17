@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<string>
 #include<algorithm>
 
 using namespace std;
@@ -103,9 +104,30 @@ public:
         res.insert(res.end(), digits.begin(), digits.end());
         return res;
     }
+
+    string addBinary(string a, string b) {
+        if (a.size() >= b.size()) return addBinaryHelper(a, b);
+        return addBinaryHelper(b, a);
+    }
+    
+    string addBinaryHelper(string a, string b) {
+        string res = "";
+        int tmp, carry = 0;
+        // 此处a总是更长的那个字符串
+        for (int i = a.size()-1, j = b.size()-1; i >= 0; i--, j--) {
+            int t = j < 0 ? '0' : b[j];
+            tmp = a[i]+t+carry-2*'0';
+            carry = tmp / 2;
+            res = to_string(tmp%2) + res;
+        }
+        if (carry) res = "1" + res;
+        return res;
+    }
 };
 
 
 int main() {
+    Solution s;
+    cout << s.addBinary("0", "0");
     return 0;
 }
