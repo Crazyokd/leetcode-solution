@@ -139,6 +139,16 @@ public:
         }
         return low;
     }
+
+    int climbStairs(int n) {
+        vector<int> res(n+2, 0);
+        res[0] = 1;
+        for (int i = 0; i < n; i++) {
+            res[i+1] += res[i];
+            res[i+2] += res[i];
+        }
+        return res[n];
+    }
 };
 
 
