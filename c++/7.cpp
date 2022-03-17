@@ -2,6 +2,7 @@
 #include<vector>
 #include<string>
 #include<algorithm>
+#include<math.h>
 
 using namespace std;
 
@@ -123,11 +124,27 @@ public:
         if (carry) res = "1" + res;
         return res;
     }
+
+    int mySqrt1(int x) {
+        return sqrt(x);
+    }
+    int mySqrt2(int x) {
+        if (x == 1)return x;
+        int low = 0, high = x > 46341 ? 46341 : x;
+        while (high-low > 1) {
+            int mid = low + ((high-low) >> 1);
+            if (mid*mid == x)return mid;
+            if (mid*mid > x) high = mid;
+            else low = mid;
+        }
+        return low;
+    }
 };
 
 
 int main() {
     Solution s;
-    cout << s.addBinary("0", "0");
+    // cout << s.addBinary("0", "0");
+    cout << s.mySqrt2(8);
     return 0;
 }
