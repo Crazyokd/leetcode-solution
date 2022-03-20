@@ -21,5 +21,30 @@ public:
         }
         return res[word2.size()][word1.size()];
     }
-            
+ 
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        // binary search last column
+        int low = 0, high = matrix.size() - 1, lastColIndex = matrix[0].size() - 1;
+        while (high > low) {
+            int mid = low + ((high-low) >> 1);
+            if (matrix[mid][lastColIndex] >= target) {
+                high = mid;
+            }else {
+                low = mid+1;
+            }
+        }
+        int row = low;
+        low = 0, high = lastColIndex;
+        // binary search one row
+        while (high >= low) {
+            int mid = low + ((high-low) >> 1);
+            if (matrix[row][mid] == target) return true;
+            if (matrix[row][mid] > target) {
+                high = mid - 1;
+            }else {
+                low = mid + 1;
+            }
+        }
+        return false;
+    }
 };
