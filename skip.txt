@@ -9,3 +9,8 @@
 42.Trapping Rain Water | 22.3.6
 
 44.Wildcard Matching | 22.3.8
+
+49.Group Anagrams | 22.3.11
+
+65.Valid Number | 22.3.17
+68.Text Justification | 22.3.17
