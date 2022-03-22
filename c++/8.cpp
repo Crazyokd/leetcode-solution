@@ -1,3 +1,9 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+
+using namespace std;
+
 class Solution {
 public:
     int minDistance(string word1, string word2) {
@@ -47,4 +53,12 @@ public:
         }
         return false;
     }
+
+    void sortColors(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+    }
 };
+
+int main() {
+    return 0;
+}
