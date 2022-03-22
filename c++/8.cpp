@@ -75,8 +75,34 @@ public:
             cur.pop_back();
         }
     }
+
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int len = nums.size();
+        vector<vector<int>> res;
+        for (int i = 0; i <= len; i++) {
+            vector<int> cur;
+            subsetsHelper(1, 0, nums, cur, res, i);
+        }    
+        return res;
+    }
+    void subsetsHelper(int deepth, int index, vector<int> nums, vector<int> &cur, vector<vector<int>>& res, int k) {
+        if (deepth > k){
+            res.push_back(cur);
+            return;
+        }
+        for (int i = index; i < nums.size(); i++){
+            cur.push_back(nums[i]);
+            vector<int> tmp(nums);
+            tmp.erase(tmp.begin()+i);
+            subsetsHelper(deepth+1, i, tmp, cur, res, k);
+            cur.pop_back();
+        }
+    }
 };
 
 int main() {
+    Solution s;
+    vector<int> nums = {1,2,3};
+    s.subsets(nums);
     return 0;
 }
