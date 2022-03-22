@@ -57,6 +57,24 @@ public:
     void sortColors(vector<int>& nums) {
         sort(nums.begin(), nums.end());
     }
+
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> res;
+        vector<int> cur;
+        combineHelper(1, 0, cur, res, n, k);
+        return res;
+    }
+    void combineHelper(int deepth, int pre, vector<int> &cur, vector<vector<int>>& res, int n, int k) {
+        if (deepth > k){
+            res.push_back(cur);
+            return;
+        }
+        for (int i = pre+1; i <= n-(k-deepth) ; i++){
+            cur.push_back(i);
+            combineHelper(deepth+1, i, cur, res, n, k);
+            cur.pop_back();
+        }
+    }
 };
 
 int main() {
