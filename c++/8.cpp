@@ -98,6 +98,25 @@ public:
             cur.pop_back();
         }
     }
+
+    int removeDuplicates(vector<int>& nums) {
+        int freq = 1, res = nums.size();
+        for (int i = 1; i < res; i++) {
+            if (nums[i] == nums[i-1]) {
+                if (freq+1 > 2) {
+                    nums.erase(nums.begin()+i);
+                    res--;
+                    i--;
+                    
+                }
+                freq = 2;
+            }else {
+                freq = 1;
+            }
+            
+        }
+        return res;
+    }
 };
 
 int main() {
