@@ -35,6 +35,21 @@ public:
         }
         return newHead->next;
     }
+
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (head == NULL)return head;
+        ListNode *pre = head, *next = head->next;
+
+        while (next != NULL) {
+            if (next->val != pre->val) {
+                pre->next = next;
+                pre = next;
+            }
+            next = next->next;
+        }
+        pre->next = next;
+        return head;
+    }
 };
 
 int main() {
