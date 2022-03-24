@@ -14,7 +14,7 @@ struct ListNode {
  
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* head) {
+    ListNode* deleteDuplicatesII(ListNode* head) {
         ListNode *newHead = new ListNode(), *pre = newHead, *next = head;
         newHead -> next = head;
 
@@ -50,8 +50,37 @@ public:
         pre->next = next;
         return head;
     }
+
+    ListNode* partition(ListNode* head, int x) {
+        // if (head == NULL || head->next == NULL)return head;
+        ListNode *before = new ListNode(0), *after = new ListNode(0);
+        ListNode *res = before, *tmp = after;
+        while (head != NULL) {
+            if (head->val < x) {
+                before->next = head;
+                before = before->next;
+            }else {
+                after->next = head;
+                after = after->next;
+            }
+            head = head->next;
+        } 
+        // 连接before 和 after
+        before->next = tmp->next;
+        // 断开 after
+        after->next = NULL;
+        return res->next;
+    }
 };
 
 int main() {
+    Solution s;
+    ListNode *head = new ListNode(1, new ListNode(4, new ListNode(3, new ListNode(2, new ListNode(5, new ListNode(2))))));
+
+    ListNode *res = s.partition(head, 3);
+    while(res != NULL) {
+        cout << res->val << " ";
+        res = res->next;
+    }
     return 0;
 }
