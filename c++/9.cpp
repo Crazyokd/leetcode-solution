@@ -71,6 +71,25 @@ public:
         after->next = NULL;
         return res->next;
     }
+
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int insertPoint = 0;
+        for (int i = 0; i < m+insertPoint && insertPoint < n; i++) {
+            if (nums2[insertPoint] < nums1[i]) {
+                int begin = insertPoint;
+                insertPoint++;
+                while(insertPoint < n && nums2[insertPoint] < nums1[i]) {
+                    insertPoint++;
+                }
+                nums1.insert(nums1.begin()+i, nums2.begin()+begin, nums2.begin()+insertPoint);
+            }
+        }
+        if (insertPoint < n) {
+            nums1.insert(nums1.begin()+m+insertPoint, nums2.begin()+insertPoint, nums2.end());
+        }
+        // trim vector
+        nums1.resize(m+n);
+    }
 };
 
 int main() {
@@ -81,6 +100,18 @@ int main() {
     while(res != NULL) {
         cout << res->val << " ";
         res = res->next;
+    }
+    cout << endl;
+
+    vector<int> nums1 = {1,2,3,0,0,0};
+    vector<int> nums2 = {2,5,6};
+    
+    // nums1.insert(nums1.begin(), 3);
+
+    s.merge(nums1, 3, nums2, 3);
+
+    for (auto i : nums1) {
+        cout << i << " ";
     }
     return 0;
 }
