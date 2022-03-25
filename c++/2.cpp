@@ -163,6 +163,36 @@ public:
         helper(digits,0,"",res);
         return res;
     }
+
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        if (nums.size() < 4) return {};
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        int len = nums.size();
+        for (int i = 0; i < len-3; i++) {
+            if (i > 0 && nums[i] == nums[i-1])continue;
+            for (int j = i+1; j < len-2; j++) {
+                if (j > i+1 && nums[j] == nums[j-1])continue;
+                int left = j+1, right = len-1;
+                long long sum_i_j = nums[i] + nums[j];
+                while (right > left) {
+                    long long sum = sum_i_j - target + nums[left] + nums[right];
+                    if (sum > 0) {
+                        right--;
+                    } else if (sum < 0) {
+                        left++;
+                    } else {
+                        res.push_back({nums[i], nums[j], nums[left], nums[right]});
+                        int last_left = nums[left], last_right = nums[right];
+                        while (right > left && nums[right] == last_right) right--;
+                        while (right > left && nums[left] == last_left) left++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         ListNode *first=head, *second=head;
         while(n--){
@@ -208,5 +238,9 @@ int main(){
     // cout << solution.longestCommonPrefix(strs);
     solution.letterCombinations("23");
     printf("run success!");
+
+    int target = -11;
+    vector<int> nums = {1,-2,-5,-4,-3,3,3,5};
+    solution.fourSum(nums, target);
     return 0;
 }
