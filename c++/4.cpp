@@ -6,6 +6,29 @@ using namespace std;
 
 class Solution {
 public:
+    // https://leetcode-cn.com/problems/next-permutation/solution/xia-yi-ge-pai-lie-suan-fa-xiang-jie-si-lu-tui-dao-/
+    void nextPermutation(vector<int>& nums) {
+        int swapPoint = -1;
+        for (int i = nums.size()-1; i > 0; i--){
+            if (nums[i] > nums[i-1]) {
+                swapPoint = i-1;
+                break;
+            }
+        }
+        if (swapPoint >= 0) {
+            for (int i = nums.size()-1; i > swapPoint; i--) {
+                if (nums[i] > nums[swapPoint]) {
+                    int t = nums[i];
+                    nums[i] = nums[swapPoint];
+                    nums[swapPoint] = t;
+                    break;
+                }
+            }
+        }
+        sort(nums.begin()+swapPoint+1, nums.end());
+        
+    }
+
     int search(vector<int>& nums, int target) {
         int low = 0, high = nums.size() - 1;
         while (high >= low) {
@@ -157,5 +180,8 @@ int main() {
 
     Solution s;
     s.combinationSum(candidates, 7);
+
+    vector<int> nums = {1,3,2};
+    s.nextPermutation(nums);
     return 0;
 }
