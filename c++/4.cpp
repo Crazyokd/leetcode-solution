@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<stack>
 
 using namespace std;
 
@@ -27,6 +28,41 @@ public:
         }
         sort(nums.begin()+swapPoint+1, nums.end());
         
+    }
+
+    int longestValidParentheses(string s) {
+        int res = 0;
+        vector<int> dp(s.size() + 1, 0);
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == ')' && i > 0) {
+                if (s[i-1] == '(') {
+                    dp[i+1] = dp[i-1] + 2;
+                } else if (i-dp[i]-1 >= 0 && s[i-dp[i]-1] == '('){
+                    dp[i+1] = dp[i] + dp[i-dp[i]-1] + 2;
+                }
+                res = max(res, dp[i+1]);
+            }
+        }
+        return res;
+    }
+    int longestValidParentheses2(string s) {
+        stack<int> sta;
+        int res = 0;
+        // init
+        sta.push(-1);
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == '(') {
+                sta.push(i);
+            } else {
+                sta.pop();
+                if (sta.empty()) {
+                    sta.push(i); // 放入最后一个未被匹配的索引
+                } else {
+                    res = max(res, i - sta.top());
+                }
+            }
+        }
+        return res;
     }
 
     int search(vector<int>& nums, int target) {
@@ -183,5 +219,8 @@ int main() {
 
     vector<int> nums = {1,3,2};
     s.nextPermutation(nums);
+
+    s.longestValidParentheses("()(())");
+
     return 0;
 }
