@@ -223,6 +223,28 @@ public:
         source = res;
         countAndSayHelper(source, deepth+1, boundary);
     }
+    string countAndSay2(int n) {
+        string source = "1";
+        int index = 1;
+        while (n > index) {
+            string res = "";
+            int cnt = 0;
+            for (int i = 0; i < source.size(); i++) {
+                if (i > 0 && source[i] == source[i-1]) {
+                    cnt++;
+                } else {
+                    if (cnt > 0) {
+                        res += to_string(cnt) + source[i-1];
+                    }
+                    cnt = 1;
+                }
+            }
+            res += to_string(cnt) + source[source.size()-1];
+            source = res;
+            index++;
+        }
+        return source;
+    }
 
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> res;
