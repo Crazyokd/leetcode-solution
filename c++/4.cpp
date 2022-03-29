@@ -2,6 +2,7 @@
 #include<vector>
 #include<algorithm>
 #include<stack>
+#include<string>
 
 using namespace std;
 
@@ -157,6 +158,72 @@ public:
         }
         return true;
     }
+
+    bool row[9][9];
+    bool col[9][9];
+    bool block[9][9];
+
+    void solveSudoku(vector<vector<char>>& board) {
+       vector<pair<int, int>> spaces;
+       // init
+       for (int i = 0; i < board.size(); i++) {
+           for (int j = 0; j < board[i].size(); j++) {
+               if (board[i][j] == '.') {
+                   spaces.emplace_back(i,j);
+               } else {
+                   int value = board[i][j] - '0' - 1; // 因为索引以0开始
+                   row[i][value] = true;
+                   col[j][value] = true;
+                   block[i/3*3 + j/3][value] = true;
+               }
+           }
+       } 
+       SudokuDFS(board, spaces, 0);
+    }
+    bool SudokuDFS(vector<vector<char>>& board, vector<pair<int, int>>& spaces, int deepth) {
+        if (deepth == spaces.size()) {
+            return true;
+        }
+        auto [i, j] = spaces[deepth];
+        for (int digit = 0; digit < 9; digit++) {
+            if (!row[i][digit] && !col[j][digit] && !block[i/3*3 + j/3][digit]) {
+                row[i][digit] = true;
+                col[j][digit] = true;
+                block[i/3*3+j/3][digit] = true;
+                board[i][j] = (char)(digit + '0' + 1);
+                if (SudokuDFS(board, spaces, deepth+1)) return true;
+                row[i][digit] = false;
+                col[j][digit] = false;
+                block[i/3*3+j/3][digit] = false;
+            }
+        }
+        return false;
+    }
+
+    string countAndSay(int n) {
+        string res = "1";
+        countAndSayHelper(res, 1, n);
+        return res;
+    }
+    void countAndSayHelper(string& source, int deepth, int boundary) {
+        if (deepth == boundary) return;
+        string res = "";
+        int cnt = 0;
+        for (int i = 0; i < source.size(); i++) {
+            if (i > 0 && source[i] == source[i-1]) {
+                cnt++;
+            } else {
+                if (cnt > 0) {
+                    res += to_string(cnt) + source[i-1];
+                }
+                cnt = 1;
+            }
+        }
+        res += to_string(cnt) + source[source.size()-1];
+        source = res;
+        countAndSayHelper(source, deepth+1, boundary);
+    }
+
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> res;
         sort(candidates.begin(), candidates.begin()+candidates.size());
