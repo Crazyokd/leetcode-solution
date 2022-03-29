@@ -16,6 +16,28 @@ public:
         return n+1;
     }
 
+    int trap(vector<int>& height) {
+        int len = height.size();
+        vector<int> leftMaxHeight(len), rightMaxHeight(len);
+        // init 
+        leftMaxHeight[0] = height[0];
+        rightMaxHeight[len-1] = height[len-1];
+
+        for (int i = 1; i < len; i++) {
+            leftMaxHeight[i] = max(leftMaxHeight[i-1], height[i]);
+        }
+        for (int i = len-2; i >= 0; i--) {
+            rightMaxHeight[i] = max(rightMaxHeight[i+1], height[i]);
+        }
+
+        // get result
+        int res = 0;
+        for (int i = 1; i < len-1; i++) {
+            res += min(rightMaxHeight[i], leftMaxHeight[i]) - height[i];
+        }
+        return res;
+    }
+    
     string multiply(string num1, string num2) {
         if (num1 == "0" || num2 == "0")return "0";
         vector<int> res(num1.size()+num2.size(), 0);
