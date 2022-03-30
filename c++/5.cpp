@@ -2,6 +2,8 @@
 #include<vector>
 #include<algorithm>
 #include<string>
+#include<math.h>
+#include<unordered_map>
 
 using namespace std;
 
@@ -56,6 +58,32 @@ public:
         
         return ans;
     }
+
+    // 不够好
+    // bool isMatch(string s, string p) {
+    //     return matchHelper(s, 0, p, 0);
+    // }
+    // bool matchHelper(string s, int index_s, string p, int index_p) {
+    //     if (index_s == s.size()) {
+    //         if (index_p == p.size() || p[index_p] == '*'){
+    //             for (int i = index_p+1; i < p.size(); i++) {
+    //                 if (p[index_p] != '*') return false;
+    //             }
+    //             return true;
+    //         }
+    //         return false;
+    //     }
+    //     if (index_p < p.size()) {
+    //         if (p[index_p] == '*')
+    //             // 可以选择匹配或不匹配
+    //             return matchHelper(s, index_s+1, p, index_p) || matchHelper(s, index_s, p, index_p+1);
+
+    //         if (s[index_s] == p[index_p] || p[index_p] == '?') 
+    //             return matchHelper(s, index_s+1, p, index_p+1);
+    //     }
+        
+    //     return false;
+    // }
 
     int jump(vector<int>& nums) {
         if (nums.size() == 1)return 0;
@@ -130,6 +158,22 @@ public:
             }
         }
     }
+
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> mp;
+        for (string& str: strs) {
+            string key = str;
+            sort(key.begin(), key.end());
+            mp[key].emplace_back(str);
+        }
+        vector<vector<string>> ans;
+        for (auto it = mp.begin(); it != mp.end(); ++it) {
+            ans.emplace_back(it->second);
+        }
+        return ans;
+
+    }
+
     double myPow(double x, int n) {
         return pow(x,n);
     }
@@ -142,5 +186,9 @@ int main() {
     nums.push_back(1);
     nums.push_back(2);
     s.permuteUnique(nums);
+    // cout << s.isMatch("abcabczzzde", "*abc???de*") << endl;
+    // cout << s.isMatch("acdcb", "a*c?b") << endl;
+    // cout << s.isMatch("ab", "?*") << endl;
+    cout << s.isMatch("aaabababaaabaababbbaaaabbbbbbabbbbabbbabbaabbababab", "*ab***ba**b*b*aaab*b") << endl;;
     return 0;
 }
