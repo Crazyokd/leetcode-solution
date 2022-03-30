@@ -3,8 +3,10 @@
 #include<string>
 #include<algorithm>
 #include<math.h>
+#include<regex>
 
 using namespace std;
+
 
 struct ListNode {
     int val;
@@ -94,6 +96,13 @@ public:
         return res[m][n];
     }
 
+
+    static const regex pattern;
+
+    bool isNumber(string str) {
+        return regex_match(str, pattern);
+    }
+
     vector<int> plusOne(vector<int>& digits) {
         int len = digits.size(), carry = 1;
         for (int i = len-1; i >= 0 && carry; i--) {
@@ -150,6 +159,8 @@ public:
         return res[n];
     }
 };
+
+const regex Solution::pattern("[+-]?(?:\\d+\\.?\\d*|\\.\\d+)(?:[Ee][+-]?\\d+)?");
 
 
 int main() {
