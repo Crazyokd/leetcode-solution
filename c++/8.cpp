@@ -1,11 +1,50 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<stack>
+#include<string>
 
 using namespace std;
 
 class Solution {
 public:
+    string simplifyPath(string path) {
+        // pre process
+        path += '/';
+
+        int pre = 1;
+        stack<string> sta;
+        for (int i = 1; i < path.size(); i++) {
+            if (path[i] == '/') {
+                if (path[i-1] != '/') {
+                    string s =  path.substr(pre, i-pre);
+                    sta.push(s);
+                }
+                pre = i + 1;
+            }
+        }
+
+        string res = "";
+        // construct result
+        int back_cnt  = 0;  // 回退次数
+        while (!sta.empty()) {
+            string top = sta.top();
+            sta.pop();
+
+            if (top == ".") continue;
+            if (top == "..") {
+                back_cnt++;
+                continue;
+            } 
+            if (back_cnt > 0) {
+                back_cnt--;
+                continue;
+            }
+            res = "/" + top + res;
+        }
+        return res == "" ? "/" : res;
+    }
+
     int minDistance(string word1, string word2) {
         // init
         vector<int> initRes(word1.size()+1, 0);
@@ -123,5 +162,10 @@ int main() {
     Solution s;
     vector<int> nums = {1,2,3};
     s.subsets(nums);
+    
+    // cout << s.simplifyPath("/../") << endl;
+    // cout << s.simplifyPath("/home/") << endl;
+    cout << s.simplifyPath("/home//foo") << endl;
+    cout << s.simplifyPath("/a/./b/../../c/") << endl;
     return 0;
 }
