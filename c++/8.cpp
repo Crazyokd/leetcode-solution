@@ -66,7 +66,29 @@ public:
         }
         return res[word2.size()][word1.size()];
     }
- 
+
+    void setZeroes(vector<vector<int>>& matrix) {
+        int row_size = matrix.size();
+        int col_size = matrix[0].size();
+        vector<bool> row(row_size, false), col(col_size, false);
+        for (int i = 0; i < row_size; i++) {
+            for (int j = 0; j < col_size; j++) {
+                if (!matrix[i][j]) {
+                    row[i] = true;
+                    col[j] = true;
+                }
+            }
+        }
+        
+        for (int i = 0; i < row_size; i++) {
+            for (int j = 0; j < col_size; j++) {
+                if (row[i] || col[j]) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+    
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         // binary search last column
         int low = 0, high = matrix.size() - 1, lastColIndex = matrix[0].size() - 1;
