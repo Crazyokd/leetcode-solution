@@ -3,6 +3,7 @@
 #include<vector>
 #include<stack>
 #include<string>
+#include<unordered_map>
 
 using namespace std;
 
@@ -88,7 +89,7 @@ public:
             }
         }
     }
-    
+
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         // binary search last column
         int low = 0, high = matrix.size() - 1, lastColIndex = matrix[0].size() - 1;
@@ -117,6 +118,41 @@ public:
 
     void sortColors(vector<int>& nums) {
         sort(nums.begin(), nums.end());
+    }
+
+    unordered_map <char, int> ori,cnt;
+    bool check() {
+        for (const auto &p : ori) {
+            if (cnt[p.first] < p.second) return false;
+        }
+        return true;
+    }
+    string minWindow(string s, string t) {
+        // init
+        for (const auto &c : t) {
+            ori[c]++;
+        }
+
+        int left = 0, right = -1;
+        int s_size = s.size();
+        int ansL = -1, ansLen = INT_MAX;
+        while (++right < s_size) {
+            if (ori.find(s[right]) != ori.end()) {
+                cnt[s[right]]++;
+            }
+            while (check() && left <= right) {
+                if (right - left + 1 < ansLen) {
+                    ansLen = right - left + 1;
+                    ansL = left;
+                }
+                if (ori.find(s[left]) != ori.end()) {
+                    --cnt[s[left]];
+                }
+                ++left;
+            }
+        }
+        return ansL == -1 ? "" : s.substr(ansL, ansLen);
+
     }
 
     vector<vector<int>> combine(int n, int k) {
