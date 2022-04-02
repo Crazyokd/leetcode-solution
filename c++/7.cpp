@@ -134,6 +134,56 @@ public:
         return res;
     }
 
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> res;
+        int curCnt = 0;
+        int minSpace = 0;
+        for (int i = 0; i < words.size(); i++) {
+            // 当前是第一个单词
+            int t = curCnt + words[i].length();
+            if (t + minSpace > maxWidth) {
+                res.push_back(generateRes(words, i, maxWidth - curCnt, minSpace-1, maxWidth));
+                curCnt = 0;
+                minSpace = 0;
+                i--;
+                // 不能将当前单词放入当前行
+            } else {
+                curCnt = t;
+                minSpace += 1;
+            }
+        }
+
+        // 处理最后一行
+        string tmp = words[words.size()-minSpace];
+        for (int i = words.size()-minSpace+1; i < words.size(); i++) {
+            tmp += " "+words[i];
+        }
+        tmp += string(maxWidth - tmp.length(), ' ');
+        res.push_back(tmp);
+        return res;
+    }
+    string generateRes(vector<string>& words, int endIndex, int space, int spaceCnt, int maxWidth) {
+        string res = words[endIndex-spaceCnt-1];
+        for (int i = endIndex - spaceCnt; i < endIndex; i++) {
+            // 产生空格
+            for (int j = 0; j < space/spaceCnt; j++) {
+                res += " ";
+            }
+            if (space % spaceCnt) {
+                res += " ";
+                space -= 1;
+            }
+
+            res += words[i];
+            space -= space/spaceCnt;
+            spaceCnt--;
+        }
+        if (res.length() < maxWidth) {
+            res += string(maxWidth - res.length(), ' ');
+        }
+        return res;
+    }
+
     int mySqrt1(int x) {
         return sqrt(x);
     }
@@ -166,6 +216,15 @@ const regex Solution::pattern("[+-]?(?:\\d+\\.?\\d*|\\.\\d+)(?:[Ee][+-]?\\d+)?")
 int main() {
     Solution s;
     // cout << s.addBinary("0", "0");
-    cout << s.mySqrt2(8);
+    // cout << s.mySqrt2(8);
+
+    // vector<string> words =  {"This", "is", "an", "example", "of", "text", "justification."}; 
+    // vector<string> words = {"What","must","be","acknowledgment","shall","be"};
+    vector<string> words = {"ask","not","what","your","country","can","do","for","you","ask","what","you","can","do","for","your","country"};
+    s.fullJustify(words, 16);
+
+    for (auto i : s.fullJustify(words, 16)) {
+        cout << i << endl;
+    }
     return 0;
 }
