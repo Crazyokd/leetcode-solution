@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<stack>
 
 using namespace std;
 
@@ -49,6 +50,34 @@ public:
         }
         pre->next = next;
         return head;
+    }
+
+    int largestRectangleArea(vector<int>& heights) {
+        int h_size = heights.size();
+        vector<int> left, right;
+        stack<int> sta;
+        for (int i = 0; i < h_size; i++) {
+            while (!sta.empty() && heights[sta.top()] >= heights[i]) {
+                sta.pop();
+            }
+            left.emplace_back(sta.empty() ? -1 : sta.top());
+            sta.push(i);
+        }
+
+        sta = stack<int>();
+        for (int i = h_size-1; i >= 0; i--) {
+            while (!sta.empty() && heights[sta.top()] >= heights[i]) {
+                sta.pop();
+            }
+            right.emplace_back(sta.empty() ? h_size : sta.top());
+            sta.push(i);
+        }
+
+        int ans = 0;
+        for (int i = 0; i < h_size; i++) {
+            ans = max(ans, (right[h_size-i-1]-left[i]-1)*heights[i]);
+        }
+        return ans;
     }
 
     ListNode* partition(ListNode* head, int x) {
@@ -113,5 +142,8 @@ int main() {
     for (auto i : nums1) {
         cout << i << " ";
     }
+
+    vector<int> heights = {2,1,5,6,2,3};
+    s.largestRectangleArea(heights);
     return 0;
 }
