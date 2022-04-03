@@ -196,6 +196,53 @@ public:
         }
     }
 
+    vector<vector<bool>> visited;
+    bool exist(vector<vector<char>>& board, string word) {
+        // 初始化访问vector
+        vector<bool> init_visited(board[0].size(), false);
+        visited = vector<vector<bool>>(board.size(), init_visited);
+        // 遍历加bfs
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board[i].size(); j++) {
+                if (board[i][j] == word[0]) {
+                    visited[i][j] = true;
+                    if (bfs(board, i, j, word, 1))
+                        return true;
+                    visited[i][j] = false;
+                }
+            }
+        }
+        return false;
+    }
+    bool bfs(vector<vector<char>>& board, int row, int col, string word, int index) {
+        if (index == word.size()) return true;
+        // 上下左右
+        int row_change[] = {-1, 1, 0, 0};
+        int col_change[] = {0, 0, -1, 1};
+
+        for (int i = 0; i < 4; i++) {
+            int newRow = row + row_change[i];
+            int newCol = col + col_change[i];
+            if (check(board, newRow, newCol, board.size(), board[0].size(), word[index])) {
+                if (bfs(board, newRow, newCol, word, index+1)) {
+                    return true;
+                }
+                visited[newRow][newCol] = false;
+            }
+            
+        }
+        return false;
+    }
+    bool check(vector<vector<char>>& board, int newRow, int newCol, int maxRow, int maxCol, char c) {
+        if (newRow >= 0 && newRow < maxRow && newCol >=0 && newCol < maxCol) {
+            if (!visited[newRow][newCol] && board[newRow][newCol] == c) {
+                visited[newRow][newCol] = true;
+                return true;
+            }
+        } 
+        return false;
+    }
+    
     int removeDuplicates(vector<int>& nums) {
         int freq = 1, res = nums.size();
         for (int i = 1; i < res; i++) {
