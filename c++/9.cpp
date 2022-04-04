@@ -231,6 +231,34 @@ public:
         }
         return res;
     }
+
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res;
+        // res.emplace_back(vector<int>());
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i <= nums.size(); i++) {
+            vector<int> cur;
+            subsetsWithDupHelper(1, 0, nums, cur, res, i);
+        } 
+        return res;
+    }
+    void subsetsWithDupHelper(int deepth, int index, vector<int> nums, vector<int> &cur, vector<vector<int>>& res, int k) {
+        if (deepth > k){
+            res.push_back(cur);
+            return;
+        }
+        for (int i = index; i < nums.size(); i++){
+            // 重复元素相同位置不重复使用
+            if (i != index && nums[i] == nums[i-1]) continue;
+
+            cur.push_back(nums[i]);
+            vector<int> tmp(nums);
+            tmp.erase(tmp.begin()+i);
+            subsetsWithDupHelper(deepth+1, i, tmp, cur, res, k);
+            cur.pop_back();
+        }
+    }
 };
 
 int main() {
