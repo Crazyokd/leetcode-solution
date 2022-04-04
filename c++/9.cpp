@@ -222,6 +222,15 @@ public:
         // trim vector
         nums1.resize(m+n);
     }
+
+    vector<int> grayCode(int n) {
+        vector<int> res;
+        int cnt = 1 << n;
+        for (int i = 0; i < cnt; i++) {
+            res.emplace_back((i>>1)^i);
+        }
+        return res;
+    }
 };
 
 int main() {
