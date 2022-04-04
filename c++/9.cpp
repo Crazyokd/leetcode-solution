@@ -141,6 +141,48 @@ public:
         return ans;
     }
 
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        vector<int> left_init(matrix[0].size(), 0);
+        vector<vector<int>> left_dp(matrix.size(), left_init);
+
+        // dp
+        for (int i = 0; i < matrix.size(); i++) {
+            for (int j = 0; j < matrix[i].size(); j++) {
+                left_dp[i][j] = matrix[i][j] == '0' || j == 0 ? int(matrix[i][j]-'0') : left_dp[i][j-1] + 1;
+            }
+        }
+        
+        // 单调栈
+        int ans = 0;
+        for (int j = 0; j < matrix[0].size(); j++) {
+            int h_size = matrix.size();
+            vector<int> left, right;
+            stack<int> sta;
+            for (int i = 0; i < h_size; i++) {
+                while (!sta.empty() && left_dp[sta.top()][j] >= left_dp[i][j]) {
+                    sta.pop();
+                }
+                left.emplace_back(sta.empty() ? -1 : sta.top());
+                sta.push(i);
+            }
+
+            sta = stack<int>();
+            for (int i = h_size-1; i >= 0; i--) {
+                while (!sta.empty() && left_dp[sta.top()][j] >= left_dp[i][j]) {
+                    sta.pop();
+                }
+                right.emplace_back(sta.empty() ? h_size : sta.top());
+                sta.push(i);
+            }
+
+            for (int i = 0; i < h_size; i++) {
+                ans = max(ans, (right[h_size-i-1]-left[i]-1)*left_dp[i][j]);
+            }
+        }
+        
+        return ans;
+    }
+
     ListNode* partition(ListNode* head, int x) {
         // if (head == NULL || head->next == NULL)return head;
         ListNode *before = new ListNode(0), *after = new ListNode(0);
@@ -209,5 +251,8 @@ int main() {
 
     vector<int> nums = {2,5,6,0,0,1,2};
     s.searchII(nums, 3);
+
+    vector<vector<char>> matrix = {{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}};
+    s.maximalRectangle(matrix);
     return 0;
 }
