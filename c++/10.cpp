@@ -97,6 +97,29 @@ public:
         DFS(1, s, "", ans);
         return ans;
     }
+
+    struct TreeNode {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode() : val(0), left(nullptr), right(nullptr) {}
+        TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    };
+    
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        inorderTraversalDFS(root, ans);
+        return ans;
+    }
+
+    void inorderTraversalDFS(TreeNode* root, vector<int>& ans) {
+        if (root == NULL) return;
+
+        inorderTraversalDFS(root->left, ans);
+        ans.push_back(root->val);
+        inorderTraversalDFS(root->right, ans);
+    }
 };
 
 int main() {
