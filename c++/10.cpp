@@ -61,6 +61,42 @@ public:
 
         return flag ? node_left->next : head;
     }
+
+    bool check(string ip) {
+        if (!ip.size() || ip.size() > 3) return false;
+        if (ip[0] == '0') {
+            if (ip.size() == 1) return true;
+            else return false;
+        }
+        int ip_value = atoi(ip.c_str());
+
+        if (ip_value < 256) return true;
+        return false;
+    }
+    void DFS(int deepth, string cur_ip, string t_ans, vector<string>& ans) {
+        if (deepth == 4) {
+            if (check(cur_ip)) {
+                ans.push_back((t_ans+"."+cur_ip).substr(1));
+            } 
+            return ;
+        }
+
+        int len = cur_ip.size();
+        if (len > 0 && check(cur_ip.substr(0, 1))) {
+            DFS(deepth+1, cur_ip.substr(1), t_ans+"."+cur_ip.substr(0, 1), ans);
+        }
+        if (len > 1 && check(cur_ip.substr(0, 2))) {
+            DFS(deepth+1, cur_ip.substr(2), t_ans+"."+cur_ip.substr(0, 2), ans);
+        }
+        if (len > 2 && check(cur_ip.substr(0, 3))) {
+            DFS(deepth+1, cur_ip.substr(3), t_ans+"."+cur_ip.substr(0, 3), ans);
+        }
+    }
+    vector<string> restoreIpAddresses(string s) {
+        vector<string> ans;
+        DFS(1, s, "", ans);
+        return ans;
+    }
 };
 
 int main() {
