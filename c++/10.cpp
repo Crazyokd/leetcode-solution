@@ -120,6 +120,32 @@ public:
         ans.push_back(root->val);
         inorderTraversalDFS(root->right, ans);
     }
+
+    vector<TreeNode*> generateTrees(int n) {
+        return generateTreesHelper(1, n);
+    }
+    vector<TreeNode*> generateTreesHelper(int start, int end) {
+        if (start > end) {
+            return {NULL};
+        }
+
+        vector<TreeNode*> res;
+        for (int i = start; i <= end; i++) {
+            vector<TreeNode*> left = generateTreesHelper(start,i-1);
+            vector<TreeNode*> right = generateTreesHelper(i+1, end);
+
+
+            for (auto left_tree : left) {
+                for (auto right_tree : right) {
+                    TreeNode* root = new TreeNode(i);
+                    root->left = left_tree;
+                    root->right = right_tree;
+                    res.emplace_back(root);
+                }
+            }
+        }    
+        return res;
+    }
 };
 
 int main() {
