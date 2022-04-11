@@ -146,8 +146,30 @@ public:
         }    
         return res;
     }
+
+    int numTrees(int n) {
+        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+        return calculateTreesNum(1, n, dp);
+    }
+
+    int calculateTreesNum(int start, int end, vector<vector<int>>& dp) {
+        if (start > end) {
+            return 1;
+        }
+        if (dp[start][end]) {
+            return dp[start][end];
+        }
+        
+        int res = 0;
+        for (int i = start; i <= end; i++) {
+            res += calculateTreesNum(start, i-1, dp) * calculateTreesNum(i+1, end, dp);
+        }
+        return dp[start][end] = res;
+    }
 };
 
 int main() {
+    Solution s = Solution();
+    s.numTrees(10);
     return 0;
 }
