@@ -166,6 +166,25 @@ public:
         }
         return dp[start][end] = res;
     }
+
+    bool isInterleave(string s1, string s2, string s3) {
+        int o = s1.size(), p = s2.size(), q = s3.size();
+        if (o+p != q) return false;
+
+        const int N = 105;
+        bool dp[N][N] = {0};
+
+        dp[0][0] = true;
+        for (int i = 0; i <= o; i++) {
+            for (int j = 0; j <= p; j++) {
+                // dp[i][j] 表示 s1 的前i个 和 s2 的前j个与 s3 的前 i+j 个交错匹配。
+                int k = i+j-1;
+                dp[i][j] |= (i > 0 && s3[k] == s1[i-1] && dp[i-1][j]);
+                dp[i][j] |= (j > 0 && s3[k] == s2[j-1] && dp[i][j-1]);
+            }
+        }
+        return dp[o][p];
+    }
 };
 
 int main() {
