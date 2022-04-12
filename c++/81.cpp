@@ -36,6 +36,25 @@ public:
 
         return words_trans.size();
     }
+
+    vector<int> numberOfLines(vector<int>& widths, string s) {
+        vector<int> ans(2, 0);
+
+        int curLineWidth = 0;
+        for (int i = 0; i < s.size(); i++) {
+            int width = widths[s[i]-'a'];
+
+            if (curLineWidth + width > 100) {
+                ans[0] += 1;
+                curLineWidth = width;
+            } else {
+                curLineWidth += width;
+            }
+        }
+        ans[0] += 1;
+        ans[1] = curLineWidth;
+        return ans;
+    }
 };
 
 int main() {
