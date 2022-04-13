@@ -185,6 +185,16 @@ public:
         }
         return dp[o][p];
     }
+
+    bool isValidBST(TreeNode* root) {
+        if (root == NULL) return true;
+        long MAXX = 0x7FFFFFFF;
+        return checkIsValidBST(root, ~(MAXX+2)+1, MAXX+1);    
+    }
+    bool checkIsValidBST(TreeNode* root, long minn, long maxx) {
+        return (root->left == NULL || (root->left->val < root->val && root->left->val > minn && checkIsValidBST(root->left, minn, root->val))) && 
+            (root->right == NULL || (root->right->val > root->val && root->right->val < maxx && checkIsValidBST(root->right, root->val, maxx)));
+    }
 };
 
 int main() {
