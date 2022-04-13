@@ -196,6 +196,60 @@ public:
             (root->right == NULL || (root->right->val > root->val && root->right->val < maxx && checkIsValidBST(root->right, root->val, maxx)));
     }
 
+    // 行不通
+    // void recoverTree(TreeNode* root) {
+    //     traverse(root);
+    // }
+    // bool traverse(TreeNode* root) {
+    //     while (root != NULL){
+    //         return !recoverTreeHelper(root->left, root, true) || !recoverTreeHelper(root->right, root, false) || traverse(root->left) || traverse(root->right);
+    //     }
+    //     return true;
+    // }
+    // bool recoverTreeHelper(TreeNode* root, TreeNode* rRoot, bool flag) {
+    //     if (root == NULL) return true;
+    //     if (flag && root->val >= rRoot->val || !flag && root->val <= rRoot->val){
+    //         int t = root->val;
+    //         root->val = rRoot->val;
+    //         rRoot->val = t;
+    //         return false;
+    //     }
+        
+    //     return recoverTreeHelper(root->left, rRoot, flag) && recoverTreeHelper(root->right, rRoot, flag); 
+    // }
+    
+    // 考察二叉搜索树与中序遍历的关系
+    void recoverTree(TreeNode* root) {
+        vector<TreeNode*> nums;
+        // get the result of inorderTraversal
+        inorderTraversal(root, nums);
+
+        int swap_1 = -1, swap_2 = -1;
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i]->val <= nums[i-1]->val) {
+                if (swap_1 < 0) {
+                    swap_1 = i-1;
+                } else {
+                    swap_2 = i;
+                }
+            }
+        }
+        if (swap_2 < 0) 
+            // 交换点相邻
+            swap_2 = swap_1 + 1;
+        // 交换
+        int t = nums[swap_1]->val;
+        nums[swap_1]->val = nums[swap_2]->val;
+        nums[swap_2]->val = t;
+    }
+    void inorderTraversal(TreeNode *root, vector<TreeNode*>& nums) {
+        if (root == NULL) return;
+        
+        inorderTraversal(root->left, nums);
+        nums.emplace_back(root);
+        inorderTraversal(root->right, nums);
+    }
+
     bool isSameTree(TreeNode* p, TreeNode* q) {
         if (p != NULL || q != NULL) {
             if (p == NULL || q == NULL) return false;
