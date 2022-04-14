@@ -115,6 +115,21 @@ public:
         root->right = buildTreeHelper(cur+index-start+1, index+1, end, preorder, inorder);
         return root;
     }  
+
+    TreeNode* buildTreeII(vector<int>& inorder, vector<int>& postorder) {
+        return buildTreeHelper(postorder.size()-1, 0, inorder.size(), postorder, inorder);
+    }
+    TreeNode* buildTreeHelperII(int cur, int start, int end, vector<int>& postorder, vector<int>& inorder) {
+        if (start >= end) return NULL;
+
+        int val = postorder[cur];
+        TreeNode *root = new TreeNode(val);
+        int index = find(inorder.begin(), inorder.end(), val) - inorder.begin();
+
+        root->left = buildTreeHelper(cur-(end-index), start, index, postorder, inorder);
+        root->right = buildTreeHelper(cur-1, index+1, end, postorder, inorder);
+        return root;
+    }
 };
 
 int main() {
