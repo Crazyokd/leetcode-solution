@@ -141,6 +141,18 @@ public:
         }
         return res;
     }
+
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        return buildBST(nums.size()/2, 0, nums.size(), nums);
+    }
+    TreeNode* buildBST(int cur, int start, int end, vector<int>& nums) {
+        if (start >= end) return NULL;
+
+        TreeNode *root = new TreeNode(nums[cur]);
+        root->left = buildBST((start+cur)/2, start, cur, nums);
+        root->right = buildBST((end+cur)/2, cur+1, end, nums);
+        return root;
+    }
 };
 
 int main() {
