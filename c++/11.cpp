@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<queue>
+#include<algorithm>
 
 using namespace std;
 
@@ -98,10 +99,31 @@ public:
 
     int maxDepth(TreeNode* root) {
         return root?max(maxDepth(root->left),maxDepth(root->right))+1:0;
-    }    
+    }  
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return buildTreeHelper(0, 0, inorder.size(), preorder, inorder);
+    }
+    TreeNode* buildTreeHelper(int cur, int start, int end, vector<int>& preorder, vector<int>& inorder) {
+        if (start >= end) return NULL;
+
+        int val = preorder[cur];
+        TreeNode *root = new TreeNode(val);
+        int index = find(inorder.begin(), inorder.end(), val) - inorder.begin();
+
+        root->left = buildTreeHelper(cur+1, start, index, preorder, inorder);
+        root->right = buildTreeHelper(cur+index-start+1, index+1, end, preorder, inorder);
+        return root;
+    }  
 };
 
 int main() {
-    vector<int> nums;
+    vector<int> nums{1,2,3};
+    vector<int>::iterator isElementFound = find(nums.begin(), nums.end(), 2);
+    if (isElementFound != nums.end()) {
+        cout << "Element found" << endl;
+    } else {
+        cout << "Element not found" << endl;
+    }
     return 0;
 }
