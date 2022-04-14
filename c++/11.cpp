@@ -169,6 +169,20 @@ public:
         }
         return buildBST(nums.size()/2, 0, nums.size(), nums);
     }
+
+    bool isBalanced(TreeNode* root) {
+        bool flag = false;
+        checkIsBalanced(root, flag);
+        return !flag;
+    }
+    int checkIsBalanced(TreeNode* root, bool& flag) {
+        if (flag || root == NULL) return 0;
+
+        int leftDeepth = 1 + checkIsBalanced(root->left, flag);
+        int rightDeepth = 1 + checkIsBalanced(root->right, flag);
+        if (abs(leftDeepth-rightDeepth) > 1) flag = true;
+        return max(leftDeepth, rightDeepth);
+    }
 };
 
 int main() {
