@@ -1,5 +1,6 @@
 #include<iostream>
 #include<algorithm>
+#include<vector>
 
 using namespace std;
 
@@ -44,6 +45,28 @@ public:
         }
 
         return checkHasPathSum(root->left, curSum, targetSum) || checkHasPathSum(root->right, curSum, targetSum);
+    }
+
+    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        vector<vector<int>> res;
+        vector<int> curPath;
+        getAllPathSum(root, 0, targetSum, curPath, res);
+        return res;
+    }
+    void getAllPathSum(TreeNode* root, int curSum, int& targetSum, vector<int> curPath, vector<vector<int>>& res) {
+        if (root == NULL) return;
+
+        curSum += root->val;
+        curPath.emplace_back(root->val);
+
+        if (root->left == NULL && root->right == NULL) {
+            if (curSum == targetSum) 
+                res.emplace_back(curPath);
+            return;
+        }
+
+        getAllPathSum(root->left, curSum, targetSum, curPath, res);
+        getAllPathSum(root->right, curSum, targetSum, curPath, res);
     }
 };
 
