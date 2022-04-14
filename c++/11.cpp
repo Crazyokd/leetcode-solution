@@ -130,6 +130,17 @@ public:
         root->right = buildTreeHelper(cur-1, index+1, end, postorder, inorder);
         return root;
     }
+
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        vector<vector<int>> res = levelOrder(root);
+        int len = res.size();
+        for (int i = 0; i < len/2; i++) {
+            vector<int> t = res[i];
+            res[i] = res[len-i-1];
+            res[len-i-1] = t;
+        }
+        return res;
+    }
 };
 
 int main() {
