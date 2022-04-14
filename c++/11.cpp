@@ -15,6 +15,13 @@ public:
         TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
         TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
     };
+    struct ListNode {
+        int val;
+        ListNode *next;
+        ListNode() : val(0), next(nullptr) {}
+        ListNode(int x) : val(x), next(nullptr) {}
+        ListNode(int x, ListNode *next) : val(x), next(next) {}
+    };
 
     bool isSymmetric(TreeNode* root) {
         return !root || helper(root->left,root->right);
@@ -152,6 +159,15 @@ public:
         root->left = buildBST((start+cur)/2, start, cur, nums);
         root->right = buildBST((end+cur)/2, cur+1, end, nums);
         return root;
+    }
+
+    TreeNode* sortedListToBST(ListNode* head) {
+        vector<int> nums;
+        while(head != NULL) {
+            nums.emplace_back(head->val);
+            head = head->next;
+        }
+        return buildBST(nums.size()/2, 0, nums.size(), nums);
     }
 };
 
