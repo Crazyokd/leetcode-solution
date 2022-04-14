@@ -29,6 +29,22 @@ public:
         getMinDepth(root->left, curDepth+1, minDepth);
         getMinDepth(root->right, curDepth+1, minDepth);
     }
+
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        return checkHasPathSum(root, 0, targetSum);
+    }
+    bool checkHasPathSum(TreeNode* root, int curSum, int& targetSum) {
+        if (root == NULL) return false;
+
+        curSum += root->val;
+        if (root->left == NULL && root->right == NULL) {
+            if (curSum == targetSum) 
+                return true;
+            return false;
+        }
+
+        return checkHasPathSum(root->left, curSum, targetSum) || checkHasPathSum(root->right, curSum, targetSum);
+    }
 };
 
 int main() {
