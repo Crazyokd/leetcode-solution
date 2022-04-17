@@ -217,6 +217,18 @@ public:
         }
         return res;
     }
+
+    vector<int> getRow(int rowIndex) {
+        vector<int> pre_layer(1, 1);
+        for (int i = 2; i <= rowIndex+1; i++) {
+            vector<int> cur_layer(i, 1);
+            for (int j = 1; j < cur_layer.size()-1; j++) {
+                cur_layer[j] = pre_layer[j-1] + pre_layer[j];
+            } 
+            pre_layer = cur_layer;
+        }
+        return pre_layer;
+    }
 };
 
 int main() {
