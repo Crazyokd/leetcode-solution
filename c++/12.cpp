@@ -229,6 +229,24 @@ public:
         }
         return pre_layer;
     }
+
+    int minimumTotal(vector<vector<int>> triangle) {
+        int len = triangle.size();
+        for (int i = 1; i < len; i++) {
+            for (int j = 0; j < triangle[i].size(); j++) {
+                if (j == 0) triangle[i][j] += triangle[i-1][0];
+                else if (j == triangle[i].size()-1) triangle[i][j] += triangle[i-1][j-1];
+                else {
+                    triangle[i][j] += min(triangle[i-1][j], triangle[i-1][j-1]);
+                }
+            }
+        }
+        int res = 200 * 10000;
+        for (int i = 0; i < len; i++) {
+            res = min(res, triangle[len-1][i]);
+        }
+        return res;
+    }
 };
 
 int main() {
@@ -245,5 +263,6 @@ int main() {
 
     s.numDistinct( "babgbag", "");
 
+    s.minimumTotal(vector<vector<int>>{{2},{3,4},{6,5,7},{4,1,8,3}});
     return 0;
 }
