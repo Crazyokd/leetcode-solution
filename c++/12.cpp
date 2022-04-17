@@ -88,6 +88,51 @@ public:
         }
         return root;
     }
+
+    // // 使用递归 时间复杂度过不去
+    // int len_s;
+    // int len_t;
+    // int numDistinct(string s, string t) {
+    //     len_s = s.size();
+    //     len_t = t.size();
+    //     return numDistinctHelper(0, 0, s, t);
+    // }
+    // int numDistinctHelper(int index_s, int index_t, string& s, string& t) {
+    //     if (index_t >= len_t) return 1;
+    //     if (index_s >= len_s) return 0;
+        
+    //     return numDistinctHelper(index_s+1, index_t, s, t) + 
+    //         (s[index_s] == t[index_t] ? numDistinctHelper(index_s+1, index_t+1, s, t) : 0);
+    // }
+
+    int numDistinct(string s, string t) {
+        if (t == "") return 1;
+        int len_s = s.size();
+        int len_t = t.size();
+
+        vector<vector<long>> dp(len_t+1, vector<long>(len_s+1, 0));
+        int res = 0;
+        for (int i = 0; i < len_t; i++) {
+            long cnt = 0, k = 0;
+            for (int j = i; j <= len_s - (len_t - i); j++) {
+                // t[i] 与 s[j] 匹配
+                if (t[i] == s[j]) {
+                    if (i == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        for (; k < j; k++) {
+                            cnt += dp[i-1][k];
+                        }
+                        dp[i][j] = cnt;
+                    }
+                }
+            }
+        }
+        for (int i = len_t-1; i < len_s; i++) {
+            res += dp[len_t-1][i];
+        }
+        return res;
+    }      
 };
 
 int main() {
@@ -101,6 +146,8 @@ int main() {
 
     Solution s;
     s.flatten(root);
+
+    s.numDistinct( "babgbag", "");
 
     return 0;
 }
