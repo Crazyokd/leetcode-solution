@@ -176,6 +176,34 @@ public:
         }
         return root;
     }
+
+    Node* connectII(Node* root) {
+        if (root == NULL) return root;
+        queue<Node*> q;
+        q.push(root);
+
+        while(!q.empty()) {
+            // 设置 next
+            vector<Node*> layer;
+            while(!q.empty()) {
+                layer.emplace_back(q.front());
+                q.pop();
+            }
+
+            for (int i = 0; i < layer.size(); i++) {
+                if (i == layer.size()-1) layer[i]->next = NULL;
+                else layer[i]->next = layer[i+1];
+
+                if (layer[i]->left != NULL) {
+                    q.push(layer[i]->left);
+                }
+                if (layer[i]->right != NULL) {
+                    q.push(layer[i]->right);
+                }
+            }
+        }
+        return root;        
+    }
 };
 
 int main() {
