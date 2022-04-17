@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<queue>
 
 using namespace std;
 
@@ -11,6 +12,22 @@ struct TreeNode {
     TreeNode() : val(0), left(nullptr), right(nullptr) {}
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
+
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
 };
 
 class Solution {
@@ -132,7 +149,33 @@ public:
             res += dp[len_t-1][i];
         }
         return res;
-    }      
+    }     
+
+    Node* connect(Node* root) {
+        if (root == NULL) return root;
+        queue<Node*> q;
+        q.push(root);
+
+        while(!q.empty()) {
+            // 设置 next
+            vector<Node*> layer;
+            while(!q.empty()) {
+                layer.emplace_back(q.front());
+                q.pop();
+            }
+
+            for (int i = 0; i < layer.size(); i++) {
+                if (i == layer.size()-1) layer[i]->next = NULL;
+                else layer[i]->next = layer[i+1];
+
+                if (layer[i]->left != NULL) {
+                    q.push(layer[i]->left);
+                    q.push(layer[i]->right);
+                }
+            }
+        }
+        return root;
+    }
 };
 
 int main() {
