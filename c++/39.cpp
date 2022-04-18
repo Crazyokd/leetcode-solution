@@ -62,6 +62,22 @@ public:
         }
     }
 
+    vector<int> res;
+    vector<int> lexicalOrder(int n) {
+        for (int i = 1; i <= 9; i++) {
+            DFS(i, n);
+        }
+        return res;
+    }
+    void DFS(int cur, int n) {
+        if (cur > n) {
+            return;   
+        }
+        res.emplace_back(cur);
+        for (int i = 0; i < 10; i++) {
+            DFS(cur*10+i, n);
+        }
+    }
 };
 
 int main() {
