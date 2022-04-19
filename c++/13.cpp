@@ -4,6 +4,15 @@
 
 using namespace std;
 
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
@@ -42,6 +51,22 @@ public:
             sell2 = max(sell2, buy2 + prices[i]);
         }
         return sell2;
+    }
+
+    int res = -30000000;
+    int maxPathSum(TreeNode* root) {
+        maxPathSumHelper(root);
+        return res;
+    }
+    int maxPathSumHelper(TreeNode* root) {
+        if (root == NULL) return 0;
+
+        int leftVal = maxPathSumHelper(root->left);
+        int rightVal = maxPathSumHelper(root->right);
+
+        int retVal = root->val + max(max(leftVal, rightVal), 0);
+        res = max(res, max(retVal, root->val+leftVal+rightVal));
+        return max(0, retVal);
     }
 };
 
