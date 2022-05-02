@@ -68,6 +68,22 @@ public:
         res = max(res, max(retVal, root->val+leftVal+rightVal));
         return max(0, retVal);
     }
+
+    bool isPalindrome(string s) {
+        string newS = "";
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] >= '0' && s[i] <= '9' || s[i] >= 'a' && s[i] <= 'z')
+                newS += s[i];
+            if (s[i] >= 'A' && s[i] <= 'Z')
+                newS += s[i]+32;
+        }
+        int len = newS.size();
+        for (int i = 0; i < len/2; i++) {
+            if (newS[i] != newS[len-i-1])
+                return false;
+        }
+        return true;
+    }
 };
 
 int main() {
