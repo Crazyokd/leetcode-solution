@@ -2,6 +2,7 @@
 #include<vector>
 #include<algorithm>
 #include<unordered_set>
+#include<queue>
 
 using namespace std;
 
@@ -188,6 +189,61 @@ public:
         }
     }
     
+    const int dx[4] = {1, -1, 0, 0};
+    const int dy[4] = {0, 0, 1, -1};
+    void solve(vector<vector<char>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+        queue<pair<int, int>> q;
+        // 遍历矩阵四边，将 O 加入队列
+        for (int i = 0; i < n; i++) {
+            if (board[0][i] == 'O') {
+                board[0][i] = 'A';
+                q.emplace(0, i);
+            }
+            if (board[m-1][i] == 'O') {
+                board[m-1][i] = 'A';
+                q.emplace(m-1, i);
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            if (board[i][0] == 'O') {
+                board[i][0] = 'A';
+                q.emplace(i, 0);
+            }
+            if (board[i][n-1] == 'O') {
+                board[i][n-1] = 'A';
+                q.emplace(i, n-1);
+            }
+        }
+
+        // 广搜队列
+        while (!q.empty()) {
+            int row = q.front().first;
+            int col = q.front().second;
+            q.pop();
+
+            for (int i = 0; i < 4; i++) {
+                int newRow = row + dx[i];
+                int newCol = col + dy[i];
+                if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n || board[newRow][newCol] != 'O') {
+                    continue;
+                }
+                q.emplace(newRow, newCol);
+                board[newRow][newCol] = 'A';
+            }
+        }
+        // 凡是无标记的均进行填充
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'A') {
+                    board[i][j] = 'O';
+                } else if (board[i][j] == 'O') {
+                    board[i][j] = 'X'; 
+                }
+            }
+        }
+    }
 };
 
 int main() {
