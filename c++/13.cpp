@@ -84,6 +84,84 @@ public:
         }
         return true;
     }
+
+// private:
+//     vector<vector<string>> res = vector<vector<string>>();
+//     vector<bool> flags;
+// public:
+//     vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+//         sort(wordList.begin(), wordList.end());
+//         wordList.resize(unique(wordList.begin(), wordList.end()) - wordList.begin());
+//         int size = wordList.size();
+//         flags = vector<bool>(size, false);
+
+//         vector<string> cur_res = vector<string>();
+//         BFS(beginWord, endWord, 1, size, cur_res, wordList);
+//         return res;
+//     }
+//     void BFS(string cur, string &endWord, int depth, int &maxDepth, vector<string> cur_res, vector<string> & wordList) {
+//         int pre_size = (!res.empty() ? res[0].size() : maxDepth);
+
+//         if (depth > pre_size) {
+//             return;
+//         }
+
+//         cur_res.emplace_back(cur);
+//         // 找到一个答案
+//         if (cur == endWord) {
+//             // 当前答案更优
+//             if (pre_size > cur_res.size()) {
+//                 res.clear();
+//             } 
+//             res.emplace_back(cur_res);
+//             return;
+//         }
+
+//         // main algorithm 
+//         for (int i = 0; i < maxDepth; i++) {
+//             string next = wordList[i];
+//             if (!flags[i] && check(cur, next)) {
+//                 flags[i] = true;
+//                 BFS(next, endWord, depth + 1, maxDepth, cur_res, wordList);
+//                 flags[i] = false;
+//             }
+//         } 
+//     }
+//     bool check(string str1, string str2) {
+//         int cnt = 0;
+//         for(int i = 0; i < str1.size(); i++) {
+//             if (str1[i] != str2[i] && cnt++) {
+//                 return false;
+//             }
+//         }
+//         return true;
+//     }
+
+    int longestConsecutive(vector<int>& nums) {
+        // 去重
+        unordered_set<int> num_set;
+        for (const int& num : nums) {
+            num_set.insert(num);
+        }
+
+        int longestStreak = 0;
+
+        for (const int& num : num_set) {
+            if (!num_set.count(num - 1)) {
+                int currentNum = num;
+                int currentStreak = 1;
+
+                while (num_set.count(currentNum + 1)) {
+                    currentNum += 1;
+                    currentStreak += 1;
+                }
+
+                longestStreak = max(longestStreak, currentStreak);
+            }
+        }
+
+        return longestStreak;           
+    }
 };
 
 int main() {
