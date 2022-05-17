@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<unordered_set>
 
 using namespace std;
 
@@ -162,11 +163,14 @@ public:
 
         return longestStreak;           
     }
+
+    
 };
 
 int main() {
     Solution s;
     vector<int> prices = {3,3,5,0,0,3,1,4};
     s.maxProfitIII(prices);
+    
     return 0;
 }
