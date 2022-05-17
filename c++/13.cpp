@@ -164,6 +164,29 @@ public:
         return longestStreak;           
     }
 
+    int sumNumbers(TreeNode* root) {
+        long long res = 0L;
+        vector<int> pathSum = vector<int>();
+        preorderTraversal(root, 0, pathSum);
+        for (const int& ps : pathSum) {
+            res += ps;
+        }
+        return res;
+    }
+    void preorderTraversal(TreeNode* root, int cur, vector<int> &pathSum) {
+        cur = cur*10 + root->val;
+        if (root->left == NULL && root->right == NULL) {
+            pathSum.emplace_back(cur);
+            return;
+        }
+
+        if (root->left != NULL) {
+            preorderTraversal(root->left, cur, pathSum);
+        }
+        if (root->right != NULL) {
+            preorderTraversal(root->right, cur, pathSum);
+        }
+    }
     
 };
 
