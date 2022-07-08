@@ -2,14 +2,14 @@
 This repository is mainly used to store my leetcode solutions.
 
 ## Content
-- [Specification](#Specification)
-- [Enviroment](#Enviroment)
-- [Reference](#Reference)
-- [Others](#Others)
-- [License](#License)
+- [Specification](#specification)
+- [Enviroment](#enviroment)
+- [Reference](#reference)
+- [Others](#others)
+- [License](#license)
 
 ## Specification
-- 题解分别位于[c++/](c++/)和[Go/leetcode/](Go/leetcode/)目录。    
+- 题解分别位于[c++/](c++/)、[Go/leetcode/](Go/leetcode/)和[Java](Java/)目录。    
 - 题解按题号排序
 - 跳题目录请参考[skip.txt](skip.txt)
 - 题解的每个文件包含十道题的题解(_可能有一题多解的情况_)
@@ -25,6 +25,7 @@ This repository is mainly used to store my leetcode solutions.
 - Programing language
     * Go
     * C++
+    * Java
 - IDE
     * vscode
 
