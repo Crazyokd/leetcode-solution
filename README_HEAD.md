@@ -1,5 +1,6 @@
 # leetcode-solution
 This repository is mainly used to store my leetcode solutions.
 
-## 数组
-- [4](https://sxrekord.com/a_solut_of_lc4/)
+# note
+> 以往做题过程中想的一些乱七八槽的东西。
+
